@@ -1,0 +1,18 @@
+QPushButton{
+    border           : 0px;
+    height           : 19px;
+    width            : 19px;
+    background-image : url(src/chatroom/images/header/%s.png);
+}
+QPushButton:hover{
+    border           : 0px;
+    height           : 19px;
+    width            : 19px;
+    background-image : url(src/chatroom/images/header/%s_hover.png);
+}
+QPushButton:pressed{
+    border           : 0px;
+    height           : 19px;
+    width            : 19px;
+    background-image : url(src/chatroom/images/header/%s.png);
+}

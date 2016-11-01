@@ -1,4 +1,6 @@
 from PyQt4.QtGui import (QApplication, QWidget,
-    QGroupBox, QVBoxLayout, QGridLayout, QLabel,
-    QDesktopWidget, QPainterPath, QPainter, QBrush, QPixmap,
+    QVBoxLayout, QGridLayout, QHBoxLayout,
+    QGroupBox, QLabel, QPushButton,
+    QDesktopWidget, QPainterPath, QPainter, QBrush,
+    QPixmap, QPalette, QColor,
     QIcon, QSystemTrayIcon, QMenu, QAction)

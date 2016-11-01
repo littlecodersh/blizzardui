@@ -1,14 +1,21 @@
-from blizzardui.pyqt.QtGui import QWidget, QDesktopWidget 
+from blizzardui.pyqt.QtGui import (QWidget,
+    QDesktopWidget,
+    QVBoxLayout, QHBoxLayout,
+    QPalette, QBrush, QPixmap, QColor)
 from blizzardui.pyqt.QtCore import Qt, QEvent
+
+from .views import Header
 
 class Chatroom(QWidget):
     minSize = (300, 300) # width, height
-    def __init__(self):
+    def __init__(self, toNickName='To', fromNickName='From', background=None):
         super(QWidget, self).__init__()
-        self._init_window()
-        self._init_components()
-    def _init_window(self):
+        self._init_window(toNickName, fromNickName, background)
+        self._init_components(toNickName)
+    def _init_window(self, toNickName, fromNickName, background):
         ''' set basic settings of window '''
+        # set title & icon
+        self.setWindowTitle(toNickName)
         # set size and margins
         self.resize(500, 600)
         self.setContentsMargins(0, 0, 0, 0)
@@ -16,11 +23,23 @@ class Chatroom(QWidget):
         size = self.geometry()
         screen = QDesktopWidget().screenGeometry()
         self.move((screen.width() - size.width())/2, (screen.height() - size.height())/2)
+        # frameless and enable resize
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setMouseTracking(True)
-    def _init_components(self):
+        # set background picture
+        p = QPalette()
+        if background is None:
+            p.setColor(QPalette.Background, QColor(40, 50, 70))
+        else:
+            p.setBrush(self.backgroundRole(), QBrush(QPixmap(background)))
+        self.setPalette(p)
+    def _init_components(self, toNickName):
         ''' load components of widget '''
-        pass
+        layout = QVBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+        header = Header(self, toNickName, 'live')
+        layout.addWidget(header, 0, Qt.AlignTop)
+        self.setLayout(layout)
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.startFrameGeometry = self.frameGeometry()
