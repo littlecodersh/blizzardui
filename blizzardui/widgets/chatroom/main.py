@@ -1,7 +1,8 @@
+import os
 from blizzardui.pyqt.QtGui import (QWidget,
     QDesktopWidget,
     QVBoxLayout, QHBoxLayout,
-    QPalette, QBrush, QPixmap, QColor)
+    QPainter, QPixmap, QColor)
 from blizzardui.pyqt.QtCore import Qt, QEvent
 
 from .views import Header
@@ -18,7 +19,7 @@ class Chatroom(QWidget):
         self.setWindowTitle(toNickName)
         # set size and margins
         self.resize(500, 600)
-        self.setContentsMargins(0, 0, 0, 0)
+        self.setContentsMargins(5, 5, 5, 5)
         # locate in center
         size = self.geometry()
         screen = QDesktopWidget().screenGeometry()
@@ -26,13 +27,26 @@ class Chatroom(QWidget):
         # frameless and enable resize
         self.setWindowFlags(Qt.FramelessWindowHint)
         self.setMouseTracking(True)
-        # set background picture
-        p = QPalette()
-        if background is None:
-            p.setColor(QPalette.Background, QColor(40, 50, 70))
-        else:
-            p.setBrush(self.backgroundRole(), QBrush(QPixmap(background)))
-        self.setPalette(p)
+        # draw background
+        def paintEvent(event):
+            p = QPainter(self)
+            # draw background
+            p.setBrush(QColor(40, 50, 67))
+            p.drawRect(0, 0, self.width(), self.height())
+            # draw two borders
+            p.setPen(QColor(0, 0, 0))
+            p.drawRect(0, 0, self.width(), self.height())
+            p.setPen(QColor(70, 79, 94))
+            p.drawRect(1, 1, self.width()-2, self.height()-2)
+            # draw header
+            p.setPen(QColor(68, 72, 84))
+            for i in range(8):
+                if i == 7: p.setPen(QColor(73, 81, 97))
+                p.drawLine(100+i, 2+i, self.width()-100-i, 2+i)
+            for i in range(7):
+                p.drawPoint(99+i, 2+i)
+                p.drawPoint(self.width()-99-i, 2+i)
+        self.paintEvent = paintEvent
     def _init_components(self, toNickName):
         ''' load components of widget '''
         layout = QVBoxLayout()

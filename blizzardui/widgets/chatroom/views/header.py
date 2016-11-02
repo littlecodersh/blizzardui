@@ -14,6 +14,7 @@ class Header(QWidget):
     def __init__(self, parent, toNickName, status):
         super(QWidget, self).__init__()
         self.mainWindow = parent
+        self.setMouseTracking(True)
         layout = QVBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         fbLayout = self._get_fn_btn_layout(parent)
@@ -23,7 +24,7 @@ class Header(QWidget):
         self.setLayout(layout)
     def _get_fn_btn_layout(self, parent):
         layout = QHBoxLayout()
-        layout.setContentsMargins(0, 4, 7, 0)
+        layout.setContentsMargins(0, 0, 7, 0)
         layout.addStretch(0)
         btnList = [QPushButton() for i in range(3)]
         switchFn = self._switch_size(btnList[1])

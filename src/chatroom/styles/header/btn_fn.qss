@@ -1,18 +1,15 @@
 QPushButton{
-    border           : 0px;
-    height           : 19px;
-    width            : 19px;
+    border-left      : 4px solid rgba(0,0,0,0);
+    border-top       : 3px solid rgba(0,0,0,0);
+    border-right     : 3px solid rgba(0,0,0,0);
+    border-bottom    : 0px;
+    height           : 13;
+    width            : 13;
     background-image : url(src/chatroom/images/header/%s.png);
 }
 QPushButton:hover{
-    border           : 0px;
-    height           : 19px;
-    width            : 19px;
     background-image : url(src/chatroom/images/header/%s_hover.png);
 }
 QPushButton:pressed{
-    border           : 0px;
-    height           : 19px;
-    width            : 19px;
     background-image : url(src/chatroom/images/header/%s.png);
 }
