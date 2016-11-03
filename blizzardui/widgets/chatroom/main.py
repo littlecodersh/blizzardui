@@ -19,7 +19,7 @@ class Chatroom(QWidget):
         self.setWindowTitle(toNickName)
         # set size and margins
         self.resize(500, 600)
-        self.setContentsMargins(5, 5, 5, 5)
+        self.setContentsMargins(2, 2, 2, 2)
         # locate in center
         size = self.geometry()
         screen = QDesktopWidget().screenGeometry()
@@ -35,9 +35,9 @@ class Chatroom(QWidget):
             p.drawRect(0, 0, self.width(), self.height())
             # draw two borders
             p.setPen(QColor(0, 0, 0))
-            p.drawRect(0, 0, self.width(), self.height())
+            p.drawRect(0, 0, self.width()-1, self.height()-1)
             p.setPen(QColor(70, 79, 94))
-            p.drawRect(1, 1, self.width()-2, self.height()-2)
+            p.drawRect(1, 1, self.width()-3, self.height()-3)
             # draw header
             p.setPen(QColor(68, 72, 84))
             for i in range(8):
@@ -53,6 +53,7 @@ class Chatroom(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         header = Header(self, toNickName, 'live')
         layout.addWidget(header, 0, Qt.AlignTop)
+        self.set_status = header.set_status
         self.setLayout(layout)
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -113,3 +114,6 @@ class Chatroom(QWidget):
             h = self.minSize[1]
             if marginChange[1]: marginValue[1] = marginValue[3] - h
         self.setGeometry(*(marginValue[:2] + [w, h]))
+    def set_status(self, status, statusType='online'):
+        ''' will be registered in _init_components '''
+        raise NotImplementedError()
