@@ -1,1 +1,3 @@
-from PyQt4.QtCore import QEvent, Qt, QRect, QPoint
+from PyQt4.QtCore import (
+    QEvent, Qt, QRect, QPoint,
+    QSize)

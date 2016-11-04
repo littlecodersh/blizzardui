@@ -5,14 +5,14 @@ from blizzardui.pyqt.QtGui import (QWidget,
     QPainter, QPixmap, QColor)
 from blizzardui.pyqt.QtCore import Qt, QEvent
 
-from .views import Header
+from .views import Header, Messages
 
 class Chatroom(QWidget):
     minSize = (300, 300) # width, height
     def __init__(self, toNickName='To', fromNickName='From', background=None):
         super(QWidget, self).__init__()
         self._init_window(toNickName, fromNickName, background)
-        self._init_components(toNickName)
+        self._init_components(toNickName, fromNickName)
     def _init_window(self, toNickName, fromNickName, background):
         ''' set basic settings of window '''
         # set title & icon
@@ -47,13 +47,17 @@ class Chatroom(QWidget):
                 p.drawPoint(99+i, 2+i)
                 p.drawPoint(self.width()-99-i, 2+i)
         self.paintEvent = paintEvent
-    def _init_components(self, toNickName):
+    def _init_components(self, toNickName, fromNickName):
         ''' load components of widget '''
         layout = QVBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
         header = Header(self, toNickName, 'live')
         layout.addWidget(header, 0, Qt.AlignTop)
         self.set_status = header.set_status
+        messages = Messages(self, toNickName, fromNickName)
+        self.add_msg = messages.add_msg
+        layout.addWidget(messages, 1, Qt.AlignTop)
         self.setLayout(layout)
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -115,5 +119,8 @@ class Chatroom(QWidget):
             if marginChange[1]: marginValue[1] = marginValue[3] - h
         self.setGeometry(*(marginValue[:2] + [w, h]))
     def set_status(self, status, statusType='online'):
+        ''' will be registered in _init_components '''
+        raise NotImplementedError()
+    def add_msg(self, msg, isSend=True, timeStamp=None):
         ''' will be registered in _init_components '''
         raise NotImplementedError()
