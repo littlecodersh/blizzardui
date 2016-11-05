@@ -1,0 +1,26 @@
+QTextEdit {
+    selection-color            : rgb(223,223,223);
+    selection-background-color : rgb(66, 76, 88);
+    background-color           : transparent;
+}
+
+QScrollBar:vertical {                 
+    background   : transparent;
+    margin-right : 3;
+    width        : 10;
+}  
+  
+QScrollBar::handle:vertical {  
+    background    : rgb(73, 77, 85);
+    border-radius : 3px;
+}  
+  
+QScrollBar::handle:hover:vertical {  
+    background    : rgb(97,101,108);
+    border-radius : 3px;
+}  
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,
+        QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background    : transparent;
+}

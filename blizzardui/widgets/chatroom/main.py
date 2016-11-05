@@ -1,6 +1,6 @@
 import os
 from blizzardui.pyqt.QtGui import (QWidget,
-    QDesktopWidget,
+    QDesktopWidget, QLabel,
     QVBoxLayout, QHBoxLayout,
     QPainter, QPixmap, QColor)
 from blizzardui.pyqt.QtCore import Qt, QEvent
@@ -53,11 +53,11 @@ class Chatroom(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
         header = Header(self, toNickName, 'live')
-        layout.addWidget(header, 0, Qt.AlignTop)
+        layout.addWidget(header)
         self.set_status = header.set_status
         messages = Messages(self, toNickName, fromNickName)
         self.add_msg = messages.add_msg
-        layout.addWidget(messages, 1, Qt.AlignTop)
+        layout.addWidget(messages)
         self.setLayout(layout)
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
