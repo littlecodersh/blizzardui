@@ -75,6 +75,7 @@ class Header(QWidget):
         # draw bottom border
         p.setPen(QColor(53, 63, 80))
         p.drawRect(0, self.height()-1, self.width()-1, self.height()-1)
+        event.accept()
 
 class HeadImage(QWidget):
     image = None

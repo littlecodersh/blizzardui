@@ -22,7 +22,7 @@ class Messages(QTextEdit):
         self._init_settings()
         self._init_templates()
     def _init_settings(self):
-        self.setMouseTracking(True)
+        self.setMouseTracking(False)
         self.setFrameStyle(QFrame.NoFrame)
         self.setStyleSheet(MESSAGES_QSS)
         self.document().setDocumentMargin(0)

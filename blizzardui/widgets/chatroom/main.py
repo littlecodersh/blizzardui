@@ -5,7 +5,7 @@ from blizzardui.pyqt.QtGui import (QWidget,
     QPainter, QPixmap, QColor)
 from blizzardui.pyqt.QtCore import Qt, QEvent
 
-from .views import Header, Messages
+from .views import Header, Messages, InputField
 
 class Chatroom(QWidget):
     minSize = (300, 300) # width, height
@@ -46,6 +46,7 @@ class Chatroom(QWidget):
             for i in range(7):
                 p.drawPoint(99+i, 2+i)
                 p.drawPoint(self.width()-99-i, 2+i)
+            event.accept()
         self.paintEvent = paintEvent
     def _init_components(self, toNickName, fromNickName):
         ''' load components of widget '''
@@ -53,18 +54,20 @@ class Chatroom(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
         header = Header(self, toNickName, 'live')
-        layout.addWidget(header)
         self.set_status = header.set_status
         messages = Messages(self, toNickName, fromNickName)
         self.add_msg = messages.add_msg
-        layout.addWidget(messages)
+        inputFiled = InputField(self, messages)
+        layout.addWidget(header)
+        layout.addWidget(messages, 1)
+        layout.addWidget(inputFiled)
         self.setLayout(layout)
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.startFrameGeometry = self.frameGeometry()
             self.startPosition =  event.globalPos()
             self.startResizeMask = self._determine_position(event)
-            event.accept()
+        event.accept()
     def mouseMoveEvent(self, event):
         ''' track mouse whether it's pressed or not
          * close track by deleting this in _init_window: self.setMouseTracking(True)

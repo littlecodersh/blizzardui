@@ -1,7 +1,19 @@
 QTextEdit {
+    border                     : 1px solid rgb(62, 71, 89);
+    background                 : rgb(20, 25, 34);
     selection-color            : rgb(223,223,223);
     selection-background-color : rgb(66, 76, 88);
-    background-color           : rgb(29, 34, 44);
+    font                       : 13px;
+    color                      : rgb(223, 223, 223);
+    font-family                : Microsoft YaHei;
+}
+
+QTextEdit::hover {
+    border: 1px solid rgb(83, 91, 105);
+}
+
+QTextEdit::focus {
+    border: 1px solid rgb(30, 94, 151);
 }
 
 QScrollBar:vertical {                 
