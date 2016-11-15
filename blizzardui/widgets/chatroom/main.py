@@ -55,12 +55,12 @@ class Chatroom(QWidget):
         layout.setSpacing(0)
         header = Header(self, toNickName, 'live')
         self.set_status = header.set_status
-        messages = Messages(self, toNickName, fromNickName)
-        self.add_msg = messages.add_msg
-        inputFiled = InputField(self, messages)
+        self.messages = Messages(self, toNickName, fromNickName)
+        self.add_msg = self.messages.add_msg
+        self.inputField = InputField(self, self.messages)
         layout.addWidget(header)
-        layout.addWidget(messages, 1)
-        layout.addWidget(inputFiled)
+        layout.addWidget(self.messages, 1)
+        layout.addWidget(self.inputField)
         self.setLayout(layout)
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -121,6 +121,9 @@ class Chatroom(QWidget):
             h = self.minSize[1]
             if marginChange[1]: marginValue[1] = marginValue[3] - h
         self.setGeometry(*(marginValue[:2] + [w, h]))
+        if self.messages.height() < self.messages.minHeight:
+            self.inputField.setFixedHeight(self.inputField.height()
+                + self.messages.height() - self.messages.minHeight)
     def set_status(self, status, statusType='online'):
         ''' will be registered in _init_components '''
         raise NotImplementedError()

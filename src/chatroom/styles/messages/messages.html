@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        div#folder {
+            background: rgb(29, 34, 44);
+        }
+        div.send {
+            padding: 5px 0px 3px 0px;
+            background: rgb(27, 39, 55);
+        }
+        div.receive {
+            padding: 5px 0px 3px 0px;
+            background: rgb(29, 34, 44);
+        }
+        ::selection {
+            background: rgb(223,223,223);
+            color: rgb(66, 76, 88);
+        }
+        ::-webkit-scrollbar {
+            background:red;
+            width: 0px;
+        }
+        textfield {
+            margin: 0px 10px 0px 10px;
+            color: rgb(223, 223, 223);
+            font-family:Microsoft YaHei;
+        }
+        textfield.name {
+            font-size: 13px;
+            color: rgb(117, 197, 242);
+        }
+        textfield.time {
+            font-size: 10px;
+            color: rgb(85, 87, 93);
+            float: right;
+        }
+        p.content {
+            font-size: 13px;
+            color: rgb(223, 223, 223);
+            margin: 0px 10px 0px 10px;
+            word-wrap: break-word;
+        }
+    </style>
+    <script type="text/javascript">
+        function addMessage(content, isSend, name, time){
+            var folder = document.getElementById("folder");
+            var div = folder.children[folder.children.length-1]
+
+            if(typeof div == 'undefined' ||
+                    div.className != (isSend ? "send" : "receive")) {
+                div = document.createElement("div");
+                div.className = isSend ? "send" : "receive"
+                var nameField = document.createElement("textfield");
+                nameField.className = "name";
+                nameField.textContent = name;
+                var timeField = document.createElement("textfield");
+                timeField.className = "time";
+                timeField.textContent = time;
+
+                div.appendChild(nameField);
+                div.appendChild(timeField);
+                folder.appendChild(div);
+            }
+
+            var message = document.createElement("p");
+            message.className = "content";
+            message.textContent = content;
+            div.appendChild(message);
+        }
+    </script>
+    <title></title>
+</head>
+<body style="margin:0;background: rgb(29, 34, 44);overflow: visible;">
+<div id='folder'></div>
+</body>
+</html>

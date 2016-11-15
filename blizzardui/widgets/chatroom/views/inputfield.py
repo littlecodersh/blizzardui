@@ -62,7 +62,7 @@ class InputField(QWidget):
                 changeHeight = (self.startPosition - event.globalPos()).y()
                 endHeight = self.startHeight + changeHeight
                 messagesHeight = self.startMessagesHeight - changeHeight
-                if 100 < messagesHeight and 75 < endHeight:
+                if self.messagesWidget.minHeight < messagesHeight and 75 < endHeight:
                     self.setFixedHeight(endHeight)
             else:
                 self.mainWindow.mouseMoveEvent(event)
