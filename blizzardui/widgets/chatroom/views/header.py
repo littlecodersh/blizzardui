@@ -78,10 +78,10 @@ class Header(QWidget):
         event.accept()
 
 class HeadImage(QWidget):
-    image = None
     def __init__(self):
         super(QWidget, self).__init__()
         self.setFixedSize(50, 50)
+        self.image = None
     def paintEvent(self, event):
         p = QPainter(self)
         # draw image
@@ -97,14 +97,14 @@ class HeadImage(QWidget):
         p.drawRect(1, 1, self.width()-3, self.height()-3)
 
 class NameAndStatus(QLabel):
-    nameString   = ''
-    statusString = ''
-    name = ''
-    status = ''
-    statusType = ''
     def __init__(self, name, status, statusType='online'):
         super(QLabel, self).__init__()
         self.setContentsMargins(0, 0, 0, 0)
+        self.nameString   = ''
+        self.statusString = ''
+        self.name = ''
+        self.status = ''
+        self.statusType = ''
         self.baseNameString = '<div style="font:17px;color:rgb(121,182,236);' \
             'margin-bottom:4;font-family:Microsoft YaHei">%s </div><img src="%s">'
         self.baseStatusString = '<div style="font:12px;color:rgb(143,148,157);'\

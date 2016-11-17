@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <style type="text/css">
+        ::-webkit-scrollbar {
+            background:red;
+            width: 0px;
+        }
+        ::selection {
+            background: rgb(150, 150, 150);
+            color: rgb(223,223,223);
+        }
         div#folder {
             background: rgb(29, 34, 44);
         }
@@ -13,14 +21,6 @@
         div.receive {
             padding: 5px 0px 3px 0px;
             background: rgb(29, 34, 44);
-        }
-        ::selection {
-            background: rgb(223,223,223);
-            color: rgb(66, 76, 88);
-        }
-        ::-webkit-scrollbar {
-            background:red;
-            width: 0px;
         }
         textfield {
             margin: 0px 10px 0px 10px;

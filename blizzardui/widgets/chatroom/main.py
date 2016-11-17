@@ -5,7 +5,7 @@ from blizzardui.pyqt.QtGui import (QWidget,
     QPainter, QPixmap, QColor)
 from blizzardui.pyqt.QtCore import Qt, QEvent
 
-from .views import Header, Messages, InputField
+from .views import Header, Messages, InputField, Footer
 
 class Chatroom(QWidget):
     minSize = (300, 300) # width, height
@@ -18,7 +18,7 @@ class Chatroom(QWidget):
         # set title & icon
         self.setWindowTitle(toNickName)
         # set size and margins
-        self.resize(500, 600)
+        self.resize(320, 400)
         self.setContentsMargins(2, 2, 2, 2)
         # locate in center
         size = self.geometry()
@@ -58,9 +58,12 @@ class Chatroom(QWidget):
         self.messages = Messages(self, toNickName, fromNickName)
         self.add_msg = self.messages.add_msg
         self.inputField = InputField(self, self.messages)
+        self.footer = Footer()
+        self.set_footer = self.footer.setText
         layout.addWidget(header)
         layout.addWidget(self.messages, 1)
         layout.addWidget(self.inputField)
+        layout.addWidget(self.footer)
         self.setLayout(layout)
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -128,5 +131,8 @@ class Chatroom(QWidget):
         ''' will be registered in _init_components '''
         raise NotImplementedError()
     def add_msg(self, msg, isSend=True, timeStamp=None):
+        ''' will be registered in _init_components '''
+        raise NotImplementedError()
+    def set_footer(self, msg):
         ''' will be registered in _init_components '''
         raise NotImplementedError()

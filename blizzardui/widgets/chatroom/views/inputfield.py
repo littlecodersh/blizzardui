@@ -4,7 +4,7 @@ from blizzardui.pyqt.QtGui import (
     QWidget, QTextEdit,
     QVBoxLayout,
     QPainter, QColor)
-from blizzardui.pyqt.QtCore import Qt
+from blizzardui.pyqt.QtCore import Qt, pyqtSignal
 
 with open(os.path.join('src', 'chatroom',
         'styles', 'inputfield', 'ted_input.qss')) as f:
@@ -22,10 +22,20 @@ class InputField(QWidget):
     def _init_settings(self):
         self.setMouseTracking(True)
         self.setContentsMargins(0, 1, 0, 0)
+        self.setFixedHeight(70)
     def _init_widgets(self):
         layout = QVBoxLayout()
-        layout.setContentsMargins(7, 7, 7, 7)
-        ted = QTextEdit()
+        # bottom margin is left to footer
+        layout.setContentsMargins(7, 7, 7, 0)
+        ipf = self
+        class Ted(QTextEdit):
+            def keyPressEvent(self, event):
+                if event.key() == Qt.Key_Return:
+                    ipf.messagesWidget.add_msg(self.toPlainText())
+                    self.clear()
+                else:
+                    QTextEdit.keyPressEvent(self, event)
+        ted = Ted()
         ted.setStyleSheet(TED_INPUT_QSS)
         layout.addWidget(ted)
         self.setLayout(layout)

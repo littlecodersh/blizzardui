@@ -12,6 +12,17 @@ with open(os.path.join('src', 'chatroom',
         'styles', 'messages', 'messages.html')) as f:
     MESSAGE_HTML = f.read()
 
+# class Messages(QWidget):
+#     def __init__(self, parent, toNickName, fromNickName):
+#         super(QWidget, self).__init__()
+#         layout = QVBoxLayout()
+#         layout.setContentsMargins(0, 0, 0, 0)
+#         m = _Messages(parent, toNickName, fromNickName)
+#         layout.addWidget(m)
+#         self.setLayout(layout)
+#         self.add_msg = m.add_msg
+#         self.minHeight = 100
+
 class Messages(QWebView):
     minHeight = 100
     def __init__(self, parent, toNickName, fromNickName):
@@ -34,4 +45,6 @@ class Messages(QWebView):
             args += additionalArgs
             self.lastMsg['isSend'] = isSend
         cmd = 'addMessage(%s);' % (','.join(args))
-        self.page().mainFrame().evaluateJavaScript(cmd)
+        mf = self.page().mainFrame()
+        mf.evaluateJavaScript(cmd)
+        # self.setFixedHeight(mf.contentsSize().height())
