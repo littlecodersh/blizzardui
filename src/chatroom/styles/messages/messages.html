@@ -3,9 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <style type="text/css">
+        html {
+            overflow-y: scroll;
+        }
         ::-webkit-scrollbar {
-            background:red;
-            width: 0px;
+            background:transparent;
+            margin-right:3px;
+            width: 7px;
+        }
+        ::-webkit-scrollbar-thumb:vertical {
+            background    : rgb(73, 77, 85);
+            border-radius : 3px;
+        }
+        ::-webkit-scrollbar-thumb:vertical:hover {
+            background    : rgb(97,101,108);
+        }
+        ::-webkit-scrollbar-track {
+            background: rgb(29, 34, 44);
         }
         ::selection {
             background: rgb(150, 150, 150);

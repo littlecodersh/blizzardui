@@ -3,6 +3,7 @@ import time, os
 from blizzardui.pyqt.QtGui import (
     QWidget, QFrame,
     QVBoxLayout, QHBoxLayout,
+    QListWidget, QListWidgetItem,
     QPalette, QColor)
 from blizzardui.pyqt.QtCore import (
     Qt, QSize, QUrl)
@@ -11,17 +12,6 @@ from blizzardui.pyqt.QtWebKit import QWebView
 with open(os.path.join('src', 'chatroom',
         'styles', 'messages', 'messages.html')) as f:
     MESSAGE_HTML = f.read()
-
-# class Messages(QWidget):
-#     def __init__(self, parent, toNickName, fromNickName):
-#         super(QWidget, self).__init__()
-#         layout = QVBoxLayout()
-#         layout.setContentsMargins(0, 0, 0, 0)
-#         m = _Messages(parent, toNickName, fromNickName)
-#         layout.addWidget(m)
-#         self.setLayout(layout)
-#         self.add_msg = m.add_msg
-#         self.minHeight = 100
 
 class Messages(QWebView):
     minHeight = 100
@@ -47,4 +37,4 @@ class Messages(QWebView):
         cmd = 'addMessage(%s);' % (','.join(args))
         mf = self.page().mainFrame()
         mf.evaluateJavaScript(cmd)
-        # self.setFixedHeight(mf.contentsSize().height())
+        mf.evaluateJavaScript('window.scrollTo(0,document.body.scrollHeight);')
