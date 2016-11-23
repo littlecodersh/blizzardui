@@ -2,21 +2,23 @@ import os
 from blizzardui.pyqt.QtGui import (QWidget,
     QDesktopWidget, QLabel,
     QVBoxLayout, QHBoxLayout,
-    QPainter, QPixmap, QColor)
+    QPainter, QPixmap, QColor, QIcon)
 from blizzardui.pyqt.QtCore import Qt, QEvent
 
 from .views import Header, Messages, InputField, Footer
 
 class Chatroom(QWidget):
     minSize = (300, 300) # width, height
-    def __init__(self, toNickName='To', fromNickName='From', background=None):
+    def __init__(self, toNickName='To', fromNickName='From',
+            headImage=None, background=None):
         super(QWidget, self).__init__()
         self._init_window(toNickName, fromNickName, background)
-        self._init_components(toNickName, fromNickName)
+        self._init_components(toNickName, fromNickName, headImage)
     def _init_window(self, toNickName, fromNickName, background):
         ''' set basic settings of window '''
         # set title & icon
         self.setWindowTitle(toNickName)
+        self.setWindowIcon(QIcon('src/chatroom/images/icon/icon-online.png'))
         # set size and margins
         self.resize(320, 400)
         self.setContentsMargins(2, 2, 2, 2)
@@ -48,17 +50,18 @@ class Chatroom(QWidget):
                 p.drawPoint(self.width()-99-i, 2+i)
             event.accept()
         self.paintEvent = paintEvent
-    def _init_components(self, toNickName, fromNickName):
+    def _init_components(self, toNickName, fromNickName, headImage):
         ''' load components of widget '''
         layout = QVBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
-        header = Header(self, toNickName, 'live')
+        header = Header(self, toNickName, 'live', headImage)
         self.set_status = header.set_status
         self.messages = Messages(self, toNickName, fromNickName)
         self.add_msg = self.messages.add_msg
         self.inputField = InputField(self, self.messages)
         self.footer = Footer()
+        self.set_head_image = header.set_head_image
         self.set_footer = self.footer.setText
         layout.addWidget(header)
         layout.addWidget(self.messages, 1)
@@ -128,6 +131,9 @@ class Chatroom(QWidget):
             self.inputField.setFixedHeight(self.inputField.height()
                 + self.messages.height() - self.messages.minHeight)
     def set_status(self, status, statusType='online'):
+        ''' will be registered in _init_components '''
+        raise NotImplementedError()
+    def set_head_image(self, image):
         ''' will be registered in _init_components '''
         raise NotImplementedError()
     def add_msg(self, msg, isSend=True, timeStamp=None):

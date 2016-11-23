@@ -60,14 +60,18 @@ class Header(QWidget):
         layout = QHBoxLayout()
         layout.setContentsMargins(8, 0, 0, 0)
         layout.setSpacing(11)
-        headImage = HeadImage()
+        imageWidget = HeadImage(headImage)
         nameAndStatus = NameAndStatus(toNickName, status, statusImage)
-        layout.addWidget(headImage)
+        layout.addWidget(imageWidget)
         layout.addWidget(nameAndStatus)
         layout.addStretch()
+        self.set_head_image = imageWidget.set_head_image
         self.set_status = nameAndStatus.set_status
         return layout
     def set_status(self, status, statusType='online'):
+        ''' will be defined in _get_head_picture_layout '''
+        raise NotImplementedError()
+    def set_head_image(self, image):
         ''' will be defined in _get_head_picture_layout '''
         raise NotImplementedError()
     def paintEvent(self, event):
@@ -78,10 +82,10 @@ class Header(QWidget):
         event.accept()
 
 class HeadImage(QWidget):
-    def __init__(self):
+    def __init__(self, image):
         super(QWidget, self).__init__()
         self.setFixedSize(50, 50)
-        self.image = None
+        self.image = image
     def paintEvent(self, event):
         p = QPainter(self)
         # draw image
@@ -95,6 +99,8 @@ class HeadImage(QWidget):
         p.drawRect(0, 0, self.width()-1, self.height()-1)
         p.setPen(QColor(58, 58, 58))
         p.drawRect(1, 1, self.width()-3, self.height()-3)
+    def set_head_image(self, image):
+        self.image = image
 
 class NameAndStatus(QLabel):
     def __init__(self, name, status, statusType='online'):
