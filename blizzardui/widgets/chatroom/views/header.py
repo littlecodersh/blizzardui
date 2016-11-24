@@ -46,6 +46,8 @@ class Header(QWidget):
         for n, fn, btn in btnList:
             btn.setStyleSheet(FN_BTN_QSS % (n, n, n))
             btn.pressed.connect(fn)
+            btn.setMouseTracking(True)
+            btn.mouseMoveEvent = parent.mouseMoveEvent
             layout.addWidget(btn, 0, Qt.AlignTop)
         return layout
     def _switch_size(self, btn):

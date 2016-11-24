@@ -60,7 +60,7 @@ class Chatroom(QWidget):
         self.messages = Messages(self, toNickName, fromNickName)
         self.add_msg = self.messages.add_msg
         self.inputField = InputField(self, self.messages)
-        self.footer = Footer()
+        self.footer = Footer(self)
         self.set_head_image = header.set_head_image
         self.set_footer = self.footer.setText
         layout.addWidget(header)
@@ -80,7 +80,9 @@ class Chatroom(QWidget):
          * determine is pressed mode is on first
         '''
         if event.buttons() == Qt.LeftButton:
-            if 0 < self.startResizeMask:
+            if getattr(self, 'startResizeMask', None) is None:
+                pass
+            elif 0 < self.startResizeMask:
                 self._drag_resize(event)
             else:
                 self.move(self.startFrameGeometry.topLeft()
