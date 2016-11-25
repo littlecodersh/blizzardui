@@ -42,7 +42,7 @@ class Header(QWidget):
         btnList = [QPushButton() for i in range(3)]
         switchFn = self._switch_size(btnList[1])
         btnList = zip(['btn_hide', 'btn_big', 'btn_close'],
-            [parent.showMinimized, switchFn.next, parent.close], btnList)
+            [parent.showMinimized, lambda: switchFn.send(None), parent.close], btnList)
         for n, fn, btn in btnList:
             btn.setStyleSheet(FN_BTN_QSS % (n, n, n))
             btn.pressed.connect(fn)

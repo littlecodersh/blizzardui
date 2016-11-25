@@ -3,15 +3,16 @@ from blizzardui.pyqt.QtGui import (QWidget,
     QDesktopWidget, QLabel,
     QVBoxLayout, QHBoxLayout,
     QPainter, QPixmap, QColor, QIcon)
-from blizzardui.pyqt.QtCore import Qt, QEvent
+from blizzardui.pyqt.QtCore import Qt, QEvent, pyqtSignal
 
 from .views import Header, Messages, InputField, Footer
 
 class Chatroom(QWidget):
-    minSize = (300, 300) # width, height
+    messageReceived = pyqtSignal(unicode)
     def __init__(self, toNickName='To', fromNickName='From',
             headImage=None, background=None):
         super(QWidget, self).__init__()
+        self.minSize = (300, 300) # width, height
         self._init_window(toNickName, fromNickName, background)
         self._init_components(toNickName, fromNickName, headImage)
     def _init_window(self, toNickName, fromNickName, background):
@@ -59,7 +60,7 @@ class Chatroom(QWidget):
         self.set_status = header.set_status
         self.messages = Messages(self, toNickName, fromNickName)
         self.add_msg = self.messages.add_msg
-        self.inputField = InputField(self, self.messages)
+        self.inputField = InputField(self, self.messageReceived, self.messages)
         self.footer = Footer(self)
         self.set_head_image = header.set_head_image
         self.set_footer = self.footer.setText

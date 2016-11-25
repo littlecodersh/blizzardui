@@ -13,17 +13,17 @@ with open(os.path.join('src', 'chatroom',
 RESIZE_MARGIN = 8
 
 class InputField(QWidget):
-    def __init__(self, parent, messagesWidget):
+    def __init__(self, parent, receivedSignal, messagesWidget):
         super(QWidget, self).__init__(parent)
         self.mainWindow = parent
         self.messagesWidget = messagesWidget
         self._init_settings()
-        self._init_widgets()
+        self._init_widgets(receivedSignal)
     def _init_settings(self):
         self.setMouseTracking(True)
         self.setContentsMargins(0, 1, 0, 0)
         self.setFixedHeight(70)
-    def _init_widgets(self):
+    def _init_widgets(self, receivedSignal):
         layout = QVBoxLayout()
         # bottom margin is left to footer
         layout.setContentsMargins(7, 7, 7, 0)
@@ -31,7 +31,9 @@ class InputField(QWidget):
         class Ted(QTextEdit):
             def keyPressEvent(self, event):
                 if event.key() == Qt.Key_Return:
-                    ipf.messagesWidget.add_msg(self.toPlainText())
+                    message = self.toPlainText()
+                    ipf.messagesWidget.add_msg(message)
+                    receivedSignal.emit(unicode(message))
                     self.clear()
                 else:
                     QTextEdit.keyPressEvent(self, event)
