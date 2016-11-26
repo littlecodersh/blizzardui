@@ -31,9 +31,7 @@ class InputField(QWidget):
         class Ted(QTextEdit):
             def keyPressEvent(self, event):
                 if event.key() == Qt.Key_Return:
-                    message = self.toPlainText()
-                    ipf.messagesWidget.add_msg(message)
-                    receivedSignal.emit(unicode(message))
+                    receivedSignal.emit(unicode(self.toPlainText()))
                     self.clear()
                 else:
                     QTextEdit.keyPressEvent(self, event)
